@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curtain Effect with Centered Content</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+            background: url('image/BG-I.jpg') no-repeat center center fixed;
+            background-size: contain;
+            background-color: #2B2B2B;
+        }
+
+        .curtain {
+            position: absolute;
+            top: 0;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to bottom, #D6AE60, #D6AE60);
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5), 
+                        0 0 10px rgba(0, 0, 0, 0.5); 
+            border: 2px solid #D6AE60;
+            transition: transform 1s ease-in-out;
+            transform-origin: center;
+            z-index: 2;
+            background-size: 100% 200%;
+        }
+
+        .curtain.left {
+            left: 0;
+            transform: translateX(0);
+        }
+
+        .curtain.right {
+            right: 0;
+            transform: translateX(0);
+        }
+
+        .open .curtain.left {
+            transform: translateX(-40%); 
+        }
+
+        .open .curtain.right {
+            transform: translateX(40%);
+        }
+
+        @media (max-width: 768px) {
+            .open .curtain.left {
+                transform: translateX(-90%); 
+            }
+
+            .open .curtain.right {
+                transform: translateX(90%); 
+            }
+        }
+
+        .edge {
+            position: absolute;
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(to right, #AF6028, transparent);
+            z-index: 3;
+        }
+
+        .top-edge {
+            top: 0;
+            left: 0;
+        }
+
+        .bottom-edge {
+            bottom: 0;
+            left: 0;
+        }
+
+        .left-edge {
+            width: 10px;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: linear-gradient(to bottom, #AF6028, transparent);
+        }
+
+        .right-edge {
+            width: 10px;
+            height: 100%;
+            top: 0;
+            right: 0;
+            background: linear-gradient(to bottom, #AF6028, transparent);
+        }
+
+        .content-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end; 
+            height: 100%;
+            z-index: 1;
+            text-align: center;
+            color: #333;
+            font-family: Arial, sans-serif;
+            padding: 0 1px;
+        }
+
+        header {
+            position: absolute;
+            bottom: 12cm;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            text-align: center;
+        }
+
+        header h1 {
+            font-family: Arial, sans-serif;
+            color: #d4af37;
+            font-size: 1.5em;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 40);
+        }
+        .button-container {
+    position: absolute;
+    bottom: 7.5cm; 
+    left: 50%;
+    transform: translateX(-50%);
+    display: grid;
+    grid-template-columns: repeat(2, max-content);
+    grid-template-areas: 
+        "brochure render"
+        "creativity video";
+    gap: 15px;
+    justify-content: center;
+    width: 100%;
+    max-width: 300px;
+}
+
+/* Add a wrapper to the last button to center it */
+.floorplan-wrapper {
+    grid-column: 1 / -1; /* Make the wrapper span both columns */
+    display: flex;
+    justify-content: center;
+}
+
+.btn:nth-child(5) {
+    grid-area: floorplan;
+}
+
+
+        .btn {
+            font-family: 'Lato', sans-serif;
+            font-weight: 600; 
+            padding: 8px 16px;
+            font-size: 1em;
+            color: #8f4e03;
+            background: linear-gradient(145deg, #f7e07c, #f1c40f);
+            border: 1px solid #d4af37;
+            border-radius: 8px;
+            text-decoration: none;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            transition: background 0.3s ease, transform 0.3s ease;
+            width: 120px; /* Set a specific width for buttons to ensure spacing */
+        }
+
+        .btn:hover {
+            background: linear-gradient(145deg, #f1c40f, #f7e07c);
+            transform: translateY(-3px);
+        }
+
+        .btn:active {
+            background: linear-gradient(145deg, #f7e07c, #f1c40f);
+            transform: translateY(1px);
+        }
+
+        /* Assign buttons to grid areas */
+        .btn:nth-child(1) { grid-area: brochure; }
+        .btn:nth-child(2) { grid-area: render; }
+        .btn:nth-child(3) { grid-area: creativity; }
+        .btn:nth-child(4) { grid-area: video; }
+        .btn:nth-child(5) { grid-area: floorplan; }
+
+        @media (max-width: 768px) {
+            header {
+                bottom: 12cm; 
+            }
+
+            .button-container {
+                bottom: 8.7cm; 
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                max-width: 260px;
+                gap: 10px; /* Slightly smaller gap for mobile view */
+            }
+
+            .btn {
+                padding: 8px 12px;
+                font-size: 0.9em;
+                width: 100px; /* Reduce width for mobile view */
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.2em;
+            }
+
+            .button-container {
+                
+                max-width: 220px;
+                gap: 8px; /* Slightly reduce the gap further for smaller screens */
+            }
+
+            .btn {
+                width: 90px; /* Further reduce button width for very small screens */
+                padding: 6px 8px;
+                font-size: 0.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="curtain left"></div>
+    <div class="curtain right"></div>
+
+    <div class="content-wrapper">
+        <header>
+            <h1>INDUSTRIAL SALES KIT</h1>
+        </header>
+        <main>
+            <div class="button-container">
+                <a href="https://drive.google.com/drive/folders/1aFsjmRb7KOqeHbtRsn1sPm5wxwRoEF3C?usp=sharing" class="btn" target="_blank">Brochure</a>
+                <a href="Industrial Render.pdf" class="btn" target="_blank">Render</a>
+                <a href="https://drive.google.com/drive/folders/1X-bLwiinVewcz-gLNeyrSFvCJsUA2TVC?usp=sharing" class="btn" target="_blank">Creatives</a>
+                <a href="https://drive.google.com/drive/folders/1N_INI4RHf8fm18FxTbvPDV4XRiYwRRnw?usp=sharing" class="btn" target="_blank">Video</a>
+                <div class="floorplan-wrapper">
+                    <a href="https://drive.google.com/drive/folders/1S7jJRhS-KiMqZjZW1XZiPg9b69ylm2p1?usp=sharing" class="btn" target="_blank">Floor Plan</a>
+                </div>
+            </div>
+            
+        </main>
+    </div>
+
+    <div class="edge top-edge"></div>
+    <div class="edge bottom-edge"></div>
+    <div class="edge left-edge"></div>
+    <div class="edge right-edge"></div>
+
+    <script>
+        window.addEventListener('load', () => {
+            document.body.classList.add('open');
+        });
+    </script>
+</body>
+</html>
