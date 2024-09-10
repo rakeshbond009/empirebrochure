@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curtain Effect with Centered Content</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+            background: url('image/BG-01.jpg') no-repeat center center fixed;
+            background-size: contain;
+            background-color: #001407;
+        }
+
+        .curtain {
+            position: absolute;
+            top: 0;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to bottom, #D6AE60, #000000);
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5), 
+                        0 0 10px rgba(0, 0, 0, 0.5); 
+            border: 2px solid #D6AE60;
+            transition: transform 1s ease-in-out;
+            transform-origin: center;
+            z-index: 2;
+            background-size: 100% 200%;
+        }
+
+        .curtain.left {
+            left: 0;
+            transform: translateX(0);
+        }
+
+        .curtain.right {
+            right: 0;
+            transform: translateX(0);
+        }
+
+        /* Animation trigger */
+        .open .curtain.left {
+            transform: translateX(-40%); /* Adjusted value */
+        }
+
+        .open .curtain.right {
+            transform: translateX(40%); /* Adjusted value */
+        }
+
+        @media (max-width: 768px) {
+            .open .curtain.left {
+                transform: translateX(-90%); /* Adjusted for smaller screens */
+            }
+
+            .open .curtain.right {
+                transform: translateX(90%); /* Adjusted for smaller screens */
+            }
+        }
+
+        /* Golden edges */
+        .edge {
+            position: absolute;
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(to right, #AF6028, transparent);
+            z-index: 3;
+        }
+
+        .top-edge {
+            top: 0;
+            left: 0;
+        }
+
+        .bottom-edge {
+            bottom: 0;
+            left: 0;
+        }
+
+        .left-edge {
+            width: 10px;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: linear-gradient(to bottom, #AF6028, transparent);
+        }
+
+        .right-edge {
+            width: 10px;
+            height: 100%;
+            top: 0;
+            right: 0;
+            background: linear-gradient(to bottom, #AF6028, transparent);
+        }
+
+        /* Centered content styling */
+        .content-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            z-index: 1;
+            text-align: center;
+            color: #333;
+            font-family: Arial, sans-serif;
+            padding: 0 20px;
+        }
+
+        header {
+            position: absolute;
+            bottom: 6.2cm; /* Position header 6.2 cm from the bottom */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-family: Arial, sans-serif;
+            color: #d4af37;
+            font-size: 2em;
+            margin: 0 0 20px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 40);
+        }
+
+        .button-container {
+            position: absolute;
+            bottom: 5cm; 
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .btn {
+            font-family: 'Lato', sans-serif;
+            font-weight: 600; /* Make the font bold */
+            padding: 8px 16px;
+            font-size: 1em;
+            color: #8f4e03;
+            background: linear-gradient(145deg, #f7e07c, #f1c40f);
+            border: 1px solid #d4af37;
+            border-radius: 8px;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Add shadow to the button */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Add text shadow */
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn:hover {
+            background: linear-gradient(145deg, #f1c40f, #f7e07c);
+            transform: translateY(-3px);
+        }
+
+        .btn:active {
+            background: linear-gradient(145deg, #f7e07c, #f1c40f);
+            transform: translateY(1px);
+        }
+
+        @media (max-width: 768px) {
+            header {
+                bottom: 5.5cm; /* Position header 5.5 cm from the bottom */
+            }
+
+            header h1 {
+                font-size: 1.5em;
+            }
+
+            .button-container {
+                bottom: 3cm; /* Position buttons 3 cm from the bottom */
+                left: 50%;
+                transform: translateX(-50%);
+                flex-direction: row;
+                gap: 15px;
+            }
+
+            .btn {
+                font-size: 1em;
+                padding: 12px 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                bottom: 7.9cm; /* Position header 5.5 cm from the bottom */
+            }
+
+            header h1 {
+                font-size: 1.2em;
+            }
+
+            .button-container {
+                bottom: 7cm; /* Position buttons 3 cm from the bottom */
+                left: 50%;
+                transform: translateX(-50%);
+                flex-direction: row;
+                gap: 10px;
+            }
+
+            .btn {
+                font-size: 0.9em;
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="curtain left"></div>
+    <div class="curtain right"></div>
+
+    <div class="content-wrapper">
+        <header>
+            <h1>DIGITAL SALES KIT</h1>
+        </header>
+        <main>
+            <div class="button-container">
+                <a href="residential.html" class="btn" target="_blank">Residential</a>
+                <a href="industrial.html" class="btn" target="_blank">Industrial</a>
+            </div>
+        </main>
+    </div>
+
+    <!-- Golden edges -->
+    <div class="edge top-edge"></div>
+    <div class="edge bottom-edge"></div>
+    <div class="edge left-edge"></div>
+    <div class="edge right-edge"></div>
+
+    <script>
+        // Trigger the curtain opening
+        window.addEventListener('load', () => {
+            document.body.classList.add('open');
+        });
+    </script>
+</body>
+</html>
